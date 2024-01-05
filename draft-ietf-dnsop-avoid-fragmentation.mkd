@@ -1,7 +1,7 @@
 ---
 title: IP Fragmentation Avoidance in DNS
 abbrev: avoid-fragmentation
-docname: draft-ietf-dnsop-avoid-fragmentation-16
+docname: draft-ietf-dnsop-avoid-fragmentation-17
 
 stand_alone: true
 
