@@ -170,6 +170,12 @@ segment. In contrast, DNS over UDP has little datagram size elasticity and
 lacks insight into IP header and option size, and so must make more
 conservative estimates about available UDP payload space.
 
+DNS transaction security {{?RFC8945}} {{?RFC2931}} does protect
+against the security risks of fragmentation including protecting
+delegation responses. But {{?RFC8945}} has limited applicability due
+to key distribution requirements and there is little if any deployment
+of {{?RFC2931}}.
+
 This document specifies various techniques to avoid IP fragmentation
 of UDP packets in DNS.  In contrast, a path MTU that deviates from the
 recommended value can be obtained through static configuration, server
@@ -244,7 +250,7 @@ Recommendations for UDP requestors {#RecommendationsRequestors}
 R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size to
   the RECOMMENDED size of 1400 or a smaller size.
 
-R7. UDP requestors MAY drop fragmented DNS/UDP responses without IP reassembly
+R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
   to avoid cache poisoning attacks.
 
 R8. DNS responses may be dropped by IP fragmentation.
@@ -302,7 +308,7 @@ On-path fragmentation on IPv4
 If the Don't Fragment (DF) bit is not set,
 on-path fragmentation may happen on IPv4,
 and be vulnerable as shown in {{ProblemOfFragmentation}}.
-To avoid this, recommendation R7 should be used
+To avoid this, recommendation R7 SHOULD be used
 to discard the fragmented responses and retry by TCP.
 
 In the future, recommendation R2 could be changed from "MAY" to "SHOULD".
@@ -334,15 +340,6 @@ can intervene in path MTU discovery {{!RFC1191}} to perform intentionally
 fragmented responses from authoritative servers. {{?RFC7739}} stated the
 security implications of predictable fragment identification values.
 
-DNSSEC is a countermeasure against cache poisoning attacks that use
-IP fragmentation.
-However, DNS delegation responses are not signed with DNSSEC,
-and DNSSEC does not have a mechanism to get the correct response if
-an incorrect delegation is injected. This is a denial-of-service
-vulnerability that can yield failed name resolutions.
-If cache poisoning attacks can be avoided,
-DNSSEC validation failures will be avoided.
-
 In Section 3.2 (Message Side Guidelines) of UDP Usage Guidelines {{?RFC8085}}
 we are told that an application SHOULD NOT send UDP datagrams
 that result in IP packets that exceed the Maximum Transmission Unit (MTU)
@@ -355,6 +352,18 @@ being in the first fragment of a packet, if fragmentation occurs.
 By comparison, TCP protocol stack controls packet size and avoids IP fragmentation under ICMP NEEDFRAG attacks.
 In TCP, fragmentation should be avoided for performance reasons, whereas for
 UDP, fragmentation should be avoided for resiliency and authenticity reasons.
+
+DNS Security Protections
+--------
+
+DNSSEC is a countermeasure against cache poisoning attacks that use
+IP fragmentation.
+However, DNS delegation responses are not signed with DNSSEC,
+and DNSSEC does not have a mechanism to get the correct response if
+an incorrect delegation is injected. This is a denial-of-service
+vulnerability that can yield failed name resolutions.
+If cache poisoning attacks can be avoided,
+DNSSEC validation failures will be avoided.
 
 Acknowledgments
 =====
