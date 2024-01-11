@@ -267,7 +267,7 @@ Large DNS responses are typically the result of zone configuration.
 Zone operators SHOULD seek configurations resulting in small responses.
 For example,
 
-R9. Use a smaller number of name servers (13 may be too large)
+R9. Use a smaller number of name servers
 
 R10. Use a smaller number of A/AAAA RRs for a domain name
 
