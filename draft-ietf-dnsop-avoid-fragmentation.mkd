@@ -218,8 +218,7 @@ The methods to avoid IP fragmentation in DNS are described below:
 Recommendations for UDP responders {#RecommendationsResponders}
 -----------------------------------
 
-R1. UDP responders SHOULD send DNS responses
-  without "Fragment header" {{!RFC8200}} on IPv6.
+R1. UDP responders SHOULD NOT use IPv6 fragmentation {{!RFC8200}}.
 
 R2. UDP responders MAY set IP "Don't Fragment flag (DF) bit" {{!RFC0791}} on IPv4.
 
@@ -233,6 +232,7 @@ R3. UDP responders SHOULD compose response packets that fit in the minimum of
   the offered requestor's maximum UDP payload size {{!RFC6891}},
   the interface MTU,
   and the RECOMMENDED maximum DNS/UDP payload size 1400.
+  (See {{details}} for details.)
 
 R4. If the UDP responder detects an immediate error indicating
   that the UDP packet cannot be sent beyond the path MTU size (EMSGSIZE),
