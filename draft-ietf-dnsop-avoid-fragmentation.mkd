@@ -244,7 +244,7 @@ R4. If the UDP responder detects an immediate error indicating
   the UDP responder MAY recreate response packets fit in path MTU size,
   or with the TC bit set.
 
-  The cause and effect of the TC bit are unchanged from EDNS0 {{!RFC6891}}.
+  The cause and effect of the TC bit are unchanged {{!RFC1035}}.
 
 Recommendations for UDP requestors {#RecommendationsRequestors}
 -----------------------------------
@@ -458,7 +458,7 @@ Details are defined in {{?RFC4035}} and {{?RFC5155}}.
 Known Implementations
 ==========
 
-[ Editor note: RFC Editor, please remove this entire section. ]
+Editor note: RFC Editor, please remove this entire section.
 
 This section records the status of known implementations of these best
 practices defined by this specification at the time of publication, and any
