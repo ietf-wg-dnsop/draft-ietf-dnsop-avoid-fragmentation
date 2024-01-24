@@ -219,13 +219,13 @@ Recommendations for UDP responders {#RecommendationsResponders}
 -----------------------------------
 
 R1. UDP responders SHOULD send DNS responses
-  without "Fragment header" {{!RFC8200}} on IPv6.
+  without a "Fragment header" {{!RFC8200}} on IPv6.
 
 R2. UDP responders MAY set IP "Don't Fragment flag (DF) bit" {{!RFC0791}} on IPv4.
 
   At the time of writing, most DNS server software did not set the DF bit
   for IPv4,
-  and many OS kernel constraints make it difficult to set the DF bit in all cases.
+  and many operating systems' kernel constraints make it difficult to set the DF bit in all cases.
   Best Current Practice documents should not specify what is currently impossible,
   so R2, which is setting the DF bit, is "MAY" rather than "SHOULD".
 
@@ -236,7 +236,7 @@ R3. UDP responders SHOULD compose response packets that fit in the minimum of
 
 R4. If the UDP responder detects an immediate error indicating
   that the UDP packet cannot be sent beyond the path MTU size (EMSGSIZE),
-  the UDP responder MAY recreate response packets fit in path MTU size,
+  the UDP responder MAY recreate response packets fit in the path MTU size,
   or with the TC bit set.
 
 R5. UDP responders SHOULD limit the response size
@@ -282,12 +282,11 @@ R12. Use a smaller signature / public key size algorithm for DNSSEC.
 Protocol compliance considerations {#protocol}
 ===========
 
-Prior research [Fujiwara2018]
-has shown that some authoritative servers
-ignore the EDNS0 requestor's maximum UDP payload size, and return large UDP responses.
+Some authoritative servers deviate from the DNS standard as follows:
 
-It is also well known that some authoritative servers do not
-support TCP transport.
+- Some authoritative servers ignore the EDNS0 requestor's maximum UDP payload size, and return large UDP responses. [Fujiwara2018]
+
+- Some authoritative servers do not support TCP transport.
 
 Such non-compliant behavior cannot become implementation or configuration
 constraints for the rest of the DNS. If failure is the result, then that
