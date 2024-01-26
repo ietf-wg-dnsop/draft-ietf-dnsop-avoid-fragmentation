@@ -259,6 +259,7 @@ R8. DNS responses may be dropped by IP fragmentation.
   UDP requestors MAY retry using TCP
   or UDP with a smaller EDNS requestor's maximum UDP payload size
   per local policy.
+  UDP requestors SHOULD observe {{!RFC8961}} in setting their timeout.
 
 Recommendations for zone operators and DNS server operators {#RecommendationOperators}
 =============
