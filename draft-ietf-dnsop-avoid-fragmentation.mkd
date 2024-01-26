@@ -321,7 +321,7 @@ a DNS/UDP requestor behind a small-MTU network may experience
 UDP timeouts which would reduce performance
 and which may lead to TCP fallback.
 This would indicate prior reliance upon IP fragmentation,
-which is universally considered to be harmful
+which is considered to be harmful
 to both the performance and stability of applications, endpoints, and gateways.
 Avoiding IP fragmentation will improve operating conditions overall,
 and the performance of DNS/TCP has increased and will continue to increase.
