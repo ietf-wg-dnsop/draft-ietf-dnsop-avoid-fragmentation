@@ -1,0 +1,954 @@
+|review-ietf-dnsop-avoid-fragmentation-15-genart-lc-holmberg-2023-10-23-00
+|I am the assigned Gen-ART reviewer for this draft. The General Area
+|Review Team (Gen-ART) reviews all IETF documents being processed
+|by the IESG for the IETF Chair.  Please treat these comments just
+|like any other last call comments.
+|
+|For more information, please see the FAQ at
+|
+|<https://wiki.ietf.org/en/group/gen/GenArtFAQ>.
+|
+|review-ietf-dnsop-avoid-fragmentation-15-tsvart-lc-kuehlewind-2023-10-22-00
+|This document has been reviewed as part of the transport area review team's
+|ongoing effort to review key IETF documents. These comments were written
+|primarily for the transport area directors, but are copied to the document's
+|authors and WG to allow them to address any issues raised and also to the IETF
+|discussion list for information.
+|
+|When done at the time of IETF Last Call, the authors should consider this
+|review as part of the last-call comments they receive. Please always CC
+|tsv-art@ietf.org if you reply to or forward this review.
+|
+|Thanks for the document; it's straight-forward but probably important to write
+|down.
+|
+|I have two editorial comments and one request:
+|
+|1) I would really recommend including "IP" in the document title to be absolute
+|clear about the scope. So renaming to "IP Fragmentation Avoidance in DNS".
+
+Changed the title in -16 as proposed.
+
+|2) This sentence is really hard to read:
+|"TCP avoids fragmentation using its Maximum Segment Size (MSS)
+|parameter, but each transmitted segment is header-size aware such
+|that the size of the IP and TCP headers is known, as well as the far
+|end's MSS parameter and the interface or path MTU, so that the
+|segment size can be chosen so as to keep the each IP datagram below a
+|target size."
+|Maybe split it into two sentences:
+|"TCP avoids fragmentation by segmenting data into packets that are smaller
+|than or equal to the Maximum Segment Size (MSS). As for each transmitted
+|segment the size of the IP and TCP headers is known, the IP packet size can
+|be chosen to keep it below the other end's MSS and path MTU."
+
+changed in -16 as proposed.
+
+|3) In R8 you mention a timeout. Is it already anywhere specified how to set
+|such a time for DNS retransmissions? If so, I think a reference would be
+|useful. If not, more guidance is need to avoid network overload.
+
+Added reference to RFC 8961 proposed by Martin Duke.
+
+|Document: draft-ietf-dnsop-avoid-fragmentation-15
+|Reviewer: Christer Holmberg
+|Review Date: 2023-10-23
+|IETF LC End Date: 2023-10-27
+|IESG Telechat date: Not scheduled for a telechat
+|
+|Summary: The document is well written, and easy to read and understand. I only
+|have one minor issue/question that I'd like the authors to address.
+|
+|Major issues: N/A
+|
+|Minor issues:
+|
+|Q1: R3 and R6 mentions the recommended size of 1400. I think it would be useful
+|with a reference to Annex B, where this value is justified.
+
+Added "(See Appendix A for details.)" in both R3 and R6.
+
+|Nits/editorial comments: N/A
+
+|Subject: SECDIR review of draft-ietf-dnsop-avoid-fragmentation-16
+|From: Donald Eastlake <d3e3e3@gmail.com>
+|To: "iesg@ietf.org" <iesg@ietf.org>,
+|        draft-ietf-dnsop-avoid-fragmentation.all@ietf.org
+|Cc: Last Call <last-call@ietf.org>, secdir <secdir@ietf.org>
+|Date: Thu, 28 Dec 2023 00:44:15 -0500
+|Resent-Message-Id: <20231228054433.6F6A2C14F6AB@ietfa.amsl.com>
+|X-Mew: Text/Html in Multipart/Alternative as a singlepart
+|
+|I have reviewed this document as part of the security directorate's ongoing
+|effort to review all IETF documents being processed by the IESG. Document
+|editors and WG chairs should treat these comments just like any other last
+|call comments.
+|
+|The summary of the review is Ready with Issues.
+|
+|Security
+|--------
+|
+|In Section 7.3, the second paragraph on DNSSEC does not seem to belong in a
+|section on "Weaknesses of IP fragmentation". I suggest moving it to a new
+|Section 7.4 entitled "DNS Security Protections" or the like.
+
+edited as proposed.
+
+|Not only should the existing DNSSEC material be moved there but there should
+|be some mention of transaction authentication. The existing document
+|completely ignores RFC 8945 and RFC 2931 transaction authentication which, it
+|seems to me, when used, overcome the security infirmities of fragmented UDP.
+|Furthermore, transaction security protects delegation responses. Perhaps
+|adding something like "DNS transaction security [RFC8945] [RFC2931] does
+|protect against the security risks of fragmentation including protecting
+|delegation responses. But [RFC8945] has limited applicability due to key
+|distribution requirements and there is little if any deployment of [RFC2931]."
+
+added this text in Introduction.
+
+|There seem to be inconsistent implementation requirements for recommendation
+|R7. R7 itself says "MAY" but Section 7.1 says "should" in such a way that I
+|think it should be capitalized "SHOULD". Also, I think the last sentence of
+|7.1 should be deleted and recommendation R2 made a "SHOULD".
+
+R7 changed as "SHOULD" and removed "In the future, ...".
+
+|Minor
+|-----
+|
+|This draft has scattered statements in it that seem in need of qualification
+|or rewording to be correct.
+|
+|Abstract: "Large DNS/UDP responses are fragmented" -> "Larger DNS/UDP messages
+|are more likely to be fragmented" Couldn't a request have lots of Additional
+|Information RRs and be large?
+
+edited as proposed.q
+
+|Section 1. Introduction:, last sentence of first paragraph: It isn't the DNS
+|buffer size that causes fragmentation, it's caused by big packets. There may
+|be applications where all the packets are not that large. There are lots of
+|ways to fix this sentence, of which perhaps the simplest would be to add "In
+|the general case" to the beginning of the sentence. Other possibilities are
+|things like "DNS over UDP relies on IP fragmentation when a packet is larger
+|than the path MTU, which is invited by an EDNS buffer size larger than the
+|path MTU."
+
+edited as the latter proposal.
+
+|Section 1. Introduction, first sentence of 3rd paragraph top of page 3:
+|summarized -> states
+
+fixed
+
+|Section 1. Introduction, last paragraph, page 3: First sentence is fine. I
+|don't understand just what the rest of the paragraph is saying or why it is
+|useful. A "path MTU" can be "obtained" (not set?) through "static
+|configuration, server routing hints, ..."? Is this configuration/hint
+|affecting transit devices so as to limit/expand the path MTU? What's going on
+|here?
+
+***** I would like to remove it.
+
+|Section 3., first paragraph: So, down here we learn that private/local
+|networks are out of scope. This limitation should be earlier, like in the
+|Abstract and Introduction. I also suggest considering flipping it around and
+|saying "This document is primarily applicable to DNS use on the global
+|Internet."
+
+Added this text in Introduction.
+(However, texts in section 3 remains)
+
+|R2: While a BCP certainly shouldn't say "MUST" for something that is
+|"currently impossible", I don't see why it can't say "SHOULD" to push things
+|in the right direction. "MAY" is pretty wimpy.
+
+Robert Wilton's DISCUSS proposed another fix.
+
+|R5 seems redundant with part of R3.
+
+  merged R5 as "the network MTU value configured by the knowledge of the network operators,"
+
+|The last sentence in Section 3.1, which is after R5, seems more applicable to
+|R4 and should probably be moved up to between R4 and R5. Also, that sentence
+|uses RFC 6891 as the reference for "the TC bit". But the TC bit has only one
+|minor occurrence in RFC 6891. I believe RFC 1035 is the appropriate reference.
+
+  R5 removed. fixed the reference to "RFC 1035".
+
+|Section 7.2 says "... fragmentation, which is universally considered to be
+|harmful ..." I don't like "universally" as it might overpower the scope
+|limitation to exclude private/local networks in some readers' minds and it is
+|my understanding that within an over provisioned local network, fragmentation
+|can be quite reliable and improve performance. How about "... fragmentation,
+|which is considered harmful on the global Internet"?
+
+  removed "universally"
+
+|Appendix C: I think you should make up your mind and either tell the RFC
+|Editor to remove this before publication or to retain it. I would definitely
+|lean towards removal.
+
+changed as : "Editor note: RFC Editor, please remove this entire section."
+
+|Nits
+|----
+|
+|R1: 'without "Fragment' -> 'without a "Fragment'
+
+changed another way.
+
+|R2: "OS" is used only once here in the explanation after the recommendation.
+|Just spell it out.
+
+changed as "many operating systems' kernels"
+
+|R4: "in path MTU size" -> "in the path MTU size"
+
+fixed
+
+|Section 4: The first two recommendations do not end with a period although all
+|other recommendations do end with a period.
+
+  added periods.
+
+|Section 5: I would add something right after the Section 5 header like "Some
+|authoritative servers deviate from the DNS standard as follows:" and then make
+|the current first two sentences in Section 5 indented and/or numbered or
+|otherwise clearly a list.
+
+  changed as proposed.
+
+| Subject: [DNSOP] Artart telechat review of draft-ietf-dnsop-avoid-fragmentation-16
+| From: Barry Leiba via Datatracker <noreply@ietf.org>
+| To: <art@ietf.org>
+| Cc: dnsop@ietf.org, draft-ietf-dnsop-avoid-fragmentation.all@ietf.org,
+|         last-call@ietf.org
+| Date: Fri, 29 Dec 2023 19:40:52 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Barry Leiba <barryleiba@computer.org>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/qF54AS66r0Qi8c3fLLD89vfe9Kw>
+| 
+| Reviewer: Barry Leiba
+| Review result: Ready with Nits
+| 
+| Thanks for addressing most comments from my earlier review.  One remains, and I
+| didn't see an email response about it, so I don't know whether there was a
+| reason not to make a change or if it just got overlooked:
+| 
+| " Section 7.2 "
+| 
+|    If a UDP response packet is dropped (for any reason), it increases
+|    the attack window for poisoning the requestor's cache.
+| 
+| But Section 3.2 says this:
+| 
+|    R7.  UDP requestors MAY drop fragmented DNS/UDP responses without IP
+|    reassembly to avoid cache poisoning attacks.
+| 
+| which seems to be contradictory.  Can you clarify this apparent contradiction
+| in one place or both?
+
+edited as Paul Vixie proposed.
+
+| Subject: [DNSOP] Martin Duke's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS and COMMENT)
+| From: Martin Duke via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
+|         tjw.ietf@gmail.com
+| Date: Tue, 02 Jan 2024 11:44:09 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Martin Duke <martin.h.duke@gmail.com>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/sgoSHMc_boOWxpIcx1YfnoDS5xk>
+| 
+| Martin Duke has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: Discuss
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| DISCUSS:
+| ----------------------------------------------------------------------
+| 
+| 1) I'm unclear about Sec 4, R11 and Appendix B. When configured for minimal
+| response, are responses to ALL requesters reduced in size, or only to those
+| requesters that indicate a small MTU?
+
+all responses reduced in size.
+"minimal-responses" means that the response does not contain unnecessary data,
+but contains everything necessary.
+
+| As DNS becomes a more important vehicle for various discovery protocols (e.g.
+| ECH), I would hate for responders to globally invoke a policy that makes it
+| hard to deploy those protocols. But I'm happy to discuss this.
+
+Even in a "minimal-response" environment, when you query an HTTPS/SVCB
+record, a complete HTTPS/SVCB record is returned, so ECH is also
+included.
+
+| 2) In section 3.2, R8, please add RFC 8961 as a normative reference for how to
+| set the timeout (e.g. "UDP requestors MUST observe [RFC8961] in setting their
+| timeout.")
+
+added.
+
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+| Thanks to Mirja Kuhlewind for the TSVART review, and to the authors for
+| responding.
+| 
+| (1) I support Rob's DISCUSS (and Paul's comment) about SHOULD/MAY. "do it
+| unless the OS makes it impossible" is a typical use of SHOULD.
+
+Robert Wilton's DISCUSS proposed another fix.
+
+    R2. Where supported, UDP responders SHOULD set
+    IP "Don't Fragment flag (DF) bit" [RFC0791] on IPv4.
+
+| (2) Section 3.1, R1 says that responders SHOULD omit the fragment header. Under
+| what circumstances would it be reasonable to keep it?
+
+  R1 is changed as "R1. UDP responders SHOULD NOT use IPv6 fragmentation {{!RFC8200}}."
+
+| Subject: [DNSOP] Murray Kucherawy's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS and COMMENT)
+| From: Murray Kucherawy via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com
+| Date: Wed, 03 Jan 2024 23:06:39 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Murray Kucherawy <superuser@gmail.com>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/MmRQNzgwKAQ0Qqc7gTV9WzM2GaM>
+| 
+| Murray Kucherawy has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: Discuss
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| DISCUSS:
+| ----------------------------------------------------------------------
+| 
+| Please address the point raised by Barry Leiba in his ARTART review.
+| 
+| 
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+| I support Rob Wilton's DISCUSS position.  Piling on a bit, in reference to:
+| 
+|    R6.  UDP requestors SHOULD limit the requestor's maximum UDP payload
+|    size to the RECOMMENDED size of 1400 or a smaller size.
+| 
+| I think the "RECOMMENDED" here is just carrying forward a "RECOMMENDED" from
+| someplace else.  If that's correct, I suggest changing it to "recommended" or,
+| if you want to be more precise, "... to the size recommended by RFCXXXX of 1400
+| or smaller."  Now it's clear what the SHOULD is referencing, and you don't own
+| the RECOMMENDED part here.
+
+  changed as Robert Wilton's DISCUSS and "SHOULD".
+
+| I suggest defining "EMSGSIZE" in Section 2 to be the UNIX error code of the
+| same name.  Otherwise, we encounter it in Section 3.1 in a way that could mean
+| it's an error code (which is how I think you intend it) or as a symbolic name
+| for the path MTU size.
+
+simply removed EMSGSIZE.
+
+| Forwarded comments from Orie Steele, incoming ART Area Director:
+| 
+| "Recommendations for zone operators and DNS server operators"
+| 
+| * Define "large / small" better.
+
+***** fujiwara: It is hard for me
+
+| "Protocol compliance considerations"
+
+| * Would be nice to see reporting recommendations, perhaps that make
+| the failure an internal cost for the failing component?... would not
+| want a repeat of dmarc though.
+
+***** fujiwara: I think they are rare.
+
+| Subject: Re: [DNSOP] Murray Kucherawy's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS and COMMENT)
+| From: Joe Abley <jabley@strandkip.nl>
+| To: Murray Kucherawy <superuser@gmail.com>
+| Cc: The IESG <iesg@ietf.org>, draft-ietf-dnsop-avoid-fragmentation@ietf.org,
+|         dnsop-chairs@ietf.org, dnsop@ietf.org, benno@nlnetlabs.nl,
+|         swoolf@pir.org, tjw.ietf@gmail.com
+| Date: Thu, 4 Jan 2024 09:28:03 +0100
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| 
+| On 4 Jan 2024, at 08:21, Murray Kucherawy via Datatracker <noreply@ietf.org> wrote:
+| 
+| > "Recommendations for zone operators and DNS server operators"
+| 
+| For what it's worth, and warning! this is a small thing, I think "zone operators" is a bit vague.
+| 
+| The presumed intent of the phrase given the recommendations in the document is to identify people responsible for the choice of records in a DNS zone as part of the target audience. However, in my experience
+| 
+| - "zone" has many meanings outside of the DNS
+| - "zone" as a concept is poorly understood amongst people who fit the implied target audience but who are not protocol afficionados
+| - "zone operator" is not a term of art and could (I think) mean different things to different people
+| 
+| I think the intended group is "people who publish information in the DNS".
+| 
+| 
+| Joe
+
+changed section title: Recommendations for DNS operators
+second sentence: People who publish information in the DNS SHOULD
+
+| Subject: [DNSOP] Robert Wilton's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS)
+| From: Robert Wilton via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
+|         tjw.ietf@gmail.com
+| Date: Tue, 02 Jan 2024 07:41:02 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Robert Wilton <rwilton@cisco.com>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/ypY75qNCRzm3p1lvl7RMxGMTPu8>
+| 
+| Robert Wilton has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: Discuss
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| DISCUSS:
+| ----------------------------------------------------------------------
+| 
+| Hi,
+| 
+| Thanks for this document.
+| 
+| I'm echoing Paul's and the SECDIR review comments here on the use of MAY in
+| recommendations (since everywhere you see MAY it is equally valid for an
+| interpretation to treat it as "MAY NOT"), but I think that this makes the
+| document, as a proposed BCP, unclear enough that I'm raising this to level of a
+| DISCUSS.
+| 
+| (1) p 3, sec 3.1.  Recommendations for UDP responders
+| 
+|    At the time of writing, most DNS server software did not set the DF
+|    bit for IPv4, and many OS kernel constraints make it difficult to set
+|    the DF bit in all cases.  Best Current Practice documents should not
+|    specify what is currently impossible, so R2, which is setting the DF
+|    bit, is "MAY" rather than "SHOULD".
+| 
+| I think that this recommendation, particularly because it is using RFC 2119
+| language, is unclear.  I would suggest rephasing this to something like:
+| 
+|    R2.  Where supported, UDP responders SHOULD set IP "Don't Fragment
+|    flag (DF) bit" [RFC0791] on IPv4.
+
+Edited as proposed.
+
+| (2) p 3, sec 3.2.  Recommendations for UDP requestors
+| 
+|    R6.  UDP requestors SHOULD limit the requestor's maximum UDP payload
+|    size to the RECOMMENDED size of 1400 or a smaller size.
+| 
+| I find this recommendation to be unclear because it mixes both a "SHOULD" and
+| "RECOMMENDED", i.e., I find it unclear as to what the "SHOULD" applies to.  Is
+| the recommendation (i) that UDP requestors should limit the maximum UDP
+| payload.  Or (ii) is the recommendation that a limit of 1400 be used, or (iii)
+| perhaps both.  Maybe rewording this to something like the following would help:
+| 
+|    R6.  UDP requestors SHOULD limit the requestor's maximum UDP payload
+|    size to 1400 bytes, but MAY limit the maximum UDP payload size to a
+|    smaller size on small MTU (less than 1500 bytes) networks.
+| 
+|    or,
+| 
+|    R6.  UDP requestors SHOULD limit the requestor's maximum UDP payload
+|    size.  It is RECOMMENDED to use a limit of 1400 bytes, but a smaller
+|    limit MAY be used.
+
+edited as proposed, and changed "RECOMMENDED" as "SHOULD".
+
+| (3) p 3, sec 3.2.  Recommendations for UDP requestors
+| 
+|    R7.  UDP requestors MAY drop fragmented DNS/UDP responses without IP
+|    reassembly to avoid cache poisoning attacks.
+| 
+| As written, I don't think that this is really a recommendation.  Either it is a
+| just a statement or fact (in which case it is not a recommendation), or it
+| should be upgraded to a SHOULD.
+
+changed as "SHOULD"
+
+| (4) p 4, sec 3.2.  Recommendations for UDP requestors
+| 
+|    R7.  UDP requestors MAY drop fragmented DNS/UDP responses without IP
+|    reassembly to avoid cache poisoning attacks.
+|    R8.  DNS responses may be dropped by IP fragmentation.  Upon a
+|    timeout, to avoid resolution failures, UDP requestors MAY retry using
+|    TCP or UDP with a smaller EDNS requestor's maximum UDP payload size
+|    per local policy.
+| 
+| Again, I think that this document would be clearer if this was a SHOULD rather
+| than a MAY.
+
+****** currently, not changed
+
+| Subject: [DNSOP] Paul Wouters' Yes on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
+From: Paul Wouters via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|       dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
+|       tjw.ietf@gmail.com
+| Date: Fri, 29 Dec 2023 11:37:38 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Paul Wouters <paul.wouters@aiven.io>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/17LxlfRw8HNUvd58agPgUdvJcYw>
+| 
+| Paul Wouters has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: Yes
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+
+| 
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+| 
+|         At the time of writing, most DNS server software did not set
+|         the DF bit for IPv4, and many OS kernel constraints make it
+|         difficult to set the DF bit in all cases. Best Current Practice
+|         documents should not specify what is currently impossible, so R2,
+|         which is setting the DF bit, is "MAY" rather than "SHOULD".
+| 
+| If what you want is "we really really want this but it cannot be done on every OS",
+| then I think SHOULD instead of MUST is fine, but MAY seems too weak.
+
+changed as Robert Wilton's DISCUSS. (SHOULD)
+
+|         R7. UDP requestors MAY drop fragmented DNS/UDP responses without
+|         IP reassembly to avoid cache poisoning attacks.
+| 
+|         R8. DNS responses may be dropped by IP fragmentation. Upon a
+|         timeout, to avoid resolution failures, UDP requestors MAY retry
+|         using TCP or UDP with a smaller EDNS requestor's maximum UDP
+|         payload size per local policy.
+| 
+| Same here. R7 and R8 are "recommendations" so I feel the MAY's should be SHOULDs.
+| Otherwise the recommendation becomes "do whatever you MAY please", in which case
+| why are these in the document?
+
+changed as Robert Wilton's DISCUSS. (SHOULD)
+
+|         R9. Use a smaller number of name servers (13 may be too large)
+| 
+| I would say "name server names" instead of "name servers", to avoid any ambiguity
+| of anycast name servers operating under the same name. Eg the document is not
+| saying "use less than 13 name servers", but it is saying "use less than 13 name
+| server names"
+
+changed as "name server names". 
+Removed '(13 may be too large)'.
+
+|         smaller than those usually used for RSA.
+| 
+| smaller than those of equivalent cryptographic strength using RSA
+
+edited as proposed.
+
+| Subject: [DNSOP] Erik Kline's No Objection on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
+| From: Erik Kline via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
+|         tjw.ietf@gmail.com
+| Date: Tue, 02 Jan 2024 18:45:55 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Erik Kline <ek.ietf@gmail.com>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/5MorwyjyFoB-sfeh6IMSzRtrvA8>
+| 
+| Erik Kline has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+| # Internet AD comments for draft-ietf-dnsop-avoid-fragmentation-16
+| CC @ekline
+| 
+| * comment syntax:
+|   - https://github.com/mnot/ietf-comments/blob/main/format.md
+| 
+| * "Handling Ballot Positions":
+|   - https://ietf.org/about/groups/iesg/statements/handling-ballot-positions/
+| 
+| ## Comments
+| 
+| ### S1
+| 
+| * "TCP avoids fragmentation by ..."
+| 
+|   TCP also benefits hugely from widespread support for MSS rewriting.  If
+|   something like an "EDNS0 Payload Size rewriting" function was available
+|   and as widely deployed there might be a very different conversation to
+|   be had.
+| 
+|   No text changes necessary; just a random thought.
+
+***** no change
+
+
+| Subject: [DNSOP] Roman Danyliw's No Objection on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
+| From: Roman Danyliw via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
+|         tjw.ietf@gmail.com
+| Date: Wed, 03 Jan 2024 12:30:04 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Roman Danyliw <rdd@cert.org>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/L4fryKdzxdkXxqM3j70gjHC6SGg>
+| 
+| Roman Danyliw has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+| Thank you to Donald Eastlake for his SECDIR review.  Please review his proposed
+| text on including clarifying language around the applicability of TSIG.
+| 
+| I support Martin Duke and Rob Wilton's DISCUSS positions.
+| 
+| ** Section 7.2
+|    This would indicate prior
+|    reliance upon IP fragmentation, which is universally considered to be
+|    harmful to both the performance and stability of applications,
+|    endpoints, and gateways.
+| 
+| Is there a reference that can be cited to substantiate this "universal"
+| position?
+
+removed "universally"
+
+| Subject: [DNSOP] �C3�89ric Vyncke'27s No Objection on draft-ietf-dnsop-avoid-fragmentation-16:3A (28with COMMENT)29
+| From: Eric Vyncke via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: tjw.ietf@gmail.com, dnsop-chairs@ietf.org, dnsop@ietf.org,
+|         benno@NLnetLabs.nl, swoolf@pir.org,
+|         draft-ietf-dnsop-avoid-fragmentation@ietf.org
+| Date: Thu, 04 Jan 2024 06:48:39 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Eric Vyncke <evyncke@cisco.com>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/oDc5KX_FtY3g8qbHC4dQk1o3FNc>
+| 
+| Eric Vyncke has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+| Thank you for this document, DNS is so important for the global Internet that a
+| BCP is welcome. I am afraid that for several reasons I was unable to review
+| correctly this document on time, mainly relying on Vladimír Čunát's DNS-dir
+| review at
+| https://datatracker.ietf.org/doc/review-ietf-dnsop-avoid-fragmentation-16-dnsdir-telechat-cunat-2023-12-27/
+| .
+| 
+| Nevertheless, I support Rob's DISCUSS about the use of MAY/SHOULD about the
+| IPv4 DF-bit in section 3.1; also, an assertion like `many OS kernel constraints
+| make it difficult to set the DF bit` should be backed by a reference.
+| 
+| I also find 'light' to rely on TCP MSS as it is set by the end points only,
+| i.e., it can also leads to IPv4 fragmentation in the path (or IPv6
+| fragmentation by the kernel at the source).
+
+Agree. But, DNS/UDP communications happen without TCP.
+
+| Section 3, does `These recommendations are intended for nodes with global IP
+| addresses on the Internet` also cover the use of NAT/NPT when the requestor
+| uses RFC 1918 addresses or ULA?
+
+The global IP address after NAT/NPT is already the target of this document.
+
+| In section 3.1:
+| 
+| - R1 why not simply stating that there should be no IPv6 fragmentation ? Atomic
+| fragments are now discouraged for IPv6
+
+  R1 is changed as "R1. UDP responders SHOULD NOT use IPv6 fragmentation {{!RFC8200}}."
+
+| - R3 where is the packet size of 1400 coming from ? Some reasoning would be
+| welcome (e.g., based on some measurements over the global Internet). Put at
+| least a forward reference to the appendix.
+| 
+| In section 4, R9: where is `13 may be too large` coming from ?
+
+Removed '(13 may be too large)'.
+
+| 
+| Appendix `the authors' recommendation` is it a recommendation by the authors or
+| by the IETF in an IETF stream document?
+
+removed "authors'".
+
+| Subject: [DNSOP] Lars Eggert's No Objection on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
+| From: Lars Eggert via Datatracker <noreply@ietf.org>
+| To: "The IESG" <iesg@ietf.org>
+| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
+|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
+|         tjw.ietf@gmail.com
+| Date: Thu, 04 Jan 2024 03:55:34 -0800
+| Sender: "DNSOP" <dnsop-bounces@ietf.org>
+| Reply-To: Lars Eggert <lars@eggert.org>
+| Auto-Submitted: auto-generated
+| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/BwQNPQ88u4vo-UoU2tUMzvN-IWI>
+| 
+| Lars Eggert has entered the following ballot position for
+| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
+| 
+| When responding, please keep the subject line intact and reply to all
+| email addresses included in the To and CC lines. (Feel free to cut this
+| introductory paragraph, however.)
+| 
+| 
+| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
+| for more information about how to handle DISCUSS and COMMENT positions.
+| 
+| 
+| The document, along with other ballot positions, can be found here:
+| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
+| 
+| 
+| 
+| ----------------------------------------------------------------------
+| COMMENT:
+| ----------------------------------------------------------------------
+| 
+|  # GEN AD review of draft-ietf-dnsop-avoid-fragmentation-16
+|
+|CC @larseggert
+|
+|Thanks to Christer Holmberg for the General Area Review Team (Gen-ART) review
+|(https://mailarchive.ietf.org/arch/msg/gen-art/VBI2ri6JwD9TEPjcxKBi828dVs4).
+|
+|## Comments
+|
+|### Paragraph 2
+|```
+|                     IP Fragmentation Avoidance in DNS
+|		     ```
+|		     Title should clarify this is for DNS over UDP.
+
+changed as proposed.
+
+|### Section 1, paragraph 5
+|```
+|     This document specifies various techniques to avoid IP fragmentation
+|          of UDP packets in DNS.
+|	  ```
+|	  Really wish that this BCP made a much stronger recommendation for DNS over TCP.
+
+added "[RFC7766] states that all general-purpose DNS
+implementations MUST support both UDP and TCP transport." in Introduction.
+
+|### Section 3.1, paragraph 0
+|```
+|  3.1.  Recommendations for UDP responders
+|  ```
+|  I find myself agreeing with other ballots on these recommendations.
+|  Will refrain from duplicating them (and also from holding another DISCUSS
+|  based on them.)
+|
+|### Section 3.1, paragraph 3
+|```
+| At the time of writing, most DNS server software did not set the DF
+| bit for IPv4, and many OS kernel constraints make it difficult to set
+| the DF bit in all cases.  Best Current Practice documents should not
+| specify what is currently impossible, so R2, which is setting the DF
+| bit, is "MAY" rather than "SHOULD".
+| ```
+| Maybe I'm familiar with different kernels, but all the ones I am
+| familiar with (except for some IoT platforms) readily offer socket
+| options to set DF (and prevent stack fragmentation in v6).
+
+Agree. However, DNS software deveoppers cannot set DF bit "in all cases".
+
+Robert Wilton's DISCUSS proposed another fix.
+
+    R2. Where supported, UDP responders SHOULD set
+    IP "Don't Fragment flag (DF) bit" [RFC0791] on IPv4.
+
+|### Section 3.1, paragraph 3
+|```
+| R3.  UDP responders SHOULD compose response packets that fit in the
+| minimum of the offered requestor's maximum UDP payload size
+| [RFC6891], the interface MTU, and the RECOMMENDED maximum DNS/UDP
+| payload size 1400.
+| ```
+| Why SHOULD, i.e., when would it ever be OK to do this? Also, where
+| does the 1400 byte value come from (magic constant?)
+
+Please see Appendix A (added reference to Appendix A)
+
+|### Section 3.1, paragraph 3
+|```
+| R5.  UDP responders SHOULD limit the response size when UDP
+| responders are located on small MTU (<1500) networks.
+| ```
+|  Limit *to what*?
+
+  merged R3 and R5 and changed as
+  "the network MTU value configured by the knowledge of the network operators,"
+
+|### Section 4, paragraph 0
+|```
+|  4.  Recommendations for zone operators and DNS server operators
+|  ```
+|  I find it somewhat questionable to recommend changes in how DNS is
+|  being operated just to cater to UDP needing to remain a viable
+|  transport. (I realize I may be an outlier here.)
+
+It is true, even when we need to use PQC signatures.
+
+|## Nits
+|
+|All comments below are about very minor potential issues that you may choose to
+|address in some way - or ignore - as you see fit. Some were flagged by
+|automated tools (via https://github.com/larseggert/ietf-reviewtool), so there
+|will likely be some false positives. There is no need to let me know what you
+|did with these suggestions.
+|
+|### Outdated references
+|
+|Document references `draft-ietf-dnsop-svcb-https`, but that has been published
+|as `RFC9460`.
+
+fixed.
+|
+|### Grammar/style
+|
+|#### "Appendix B.", paragraph 3
+|```
+|fter two UDP timeouts, BIND 9 will fallback to TCP. C.2. Knot DNS and Knot R
+|                                   ^^^^^^^^
+|				   ```
+|				   The word "fallback" is a noun. The verb is spelled with a space.
+
+fixed
+
+|## Notes
+|
+|This review is in the ["IETF Comments" Markdown format][ICMF], You can use the
+|[`ietf-comments` tool][ICT] to automatically convert this review into
+|individual GitHub issues. Review generated by the [`ietf-reviewtool`][IRT].
+|
+|[ICMF]: https://github.com/mnot/ietf-comments/blob/main/format.md
+|[ICT]: https://github.com/mnot/ietf-comments
+|[IRT]: https://github.com/larseggert/ietf-reviewtool
