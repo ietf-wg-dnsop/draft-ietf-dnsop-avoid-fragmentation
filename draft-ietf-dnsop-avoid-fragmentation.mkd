@@ -158,7 +158,8 @@ the requestor to DNS cache poisoning from off-path attackers.
 (See {{ProblemOfFragmentation}} for references and details.)
 
 {{?RFC8900}} states that IP fragmentation
-introduces fragility to Internet communication. The transport of DNS messages
+introduces fragility to Internet communication.
+The transport of DNS messages
 over UDP should take account of the observations stated in that document.
 
 TCP avoids fragmentation by segmenting data into packets that are smaller
@@ -168,14 +169,14 @@ and the IP packet size can be chosen to keep it below the other end's MSS and pa
 This takes advantage of the elasticity of TCP's
 packetizing process as to how much queued data will fit into the next
 segment. In contrast, DNS over UDP has little datagram size elasticity and
-lacks insight into IP header and option size, and so must make more
+lacks insight into IP header and option size, so we must make more
 conservative estimates about available UDP payload space.
 
 {{?RFC7766}} states that all general-purpose DNS
 implementations MUST support both UDP and TCP transport.
 
 DNS transaction security {{?RFC8945}} {{?RFC2931}} does protect
-against the security risks of fragmentation including protecting
+against the security risks of fragmentation, including protecting
 delegation responses. But {{?RFC8945}} has limited applicability due
 to key distribution requirements and there is little if any deployment
 of {{?RFC2931}}.
@@ -239,7 +240,7 @@ R3. UDP responders SHOULD compose response packets that fit in the minimum of
   the interface MTU,
   the network MTU value configured by the knowledge of the network operators, 
   and the RECOMMENDED maximum DNS/UDP payload size 1400.
-  (See {{details}} for details.)
+  (See {{details}} for more information.)
 
 R4. If the UDP responder detects an immediate error indicating
   that the UDP packet cannot be sent beyond the path MTU size,
@@ -253,7 +254,7 @@ Recommendations for UDP requestors {#RecommendationsRequestors}
 
 R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size.
 It SHOULD use a limit of 1400 bytes, but a smaller limit MAY be used.
-(See {{details}} for details.)
+(See {{details}} for more information.)
 
 R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
   to avoid cache poisoning attacks.
@@ -270,7 +271,7 @@ Recommendations for DNS operators {#RecommendationOperators}
 =============
 
 Large DNS responses are typically the result of zone configuration.
-People who publish information in the DNS SHOULD seek configurations resulting in small responses.
+People who publish information in the DNS SHOULD seek configurations, resulting in small responses.
 For example,
 
 R9. Use a smaller number of name servers.
@@ -283,15 +284,15 @@ R11. Use minimal-responses configuration:
   and required data ({{minimal-responses}}).
 
 R12. Use a smaller signature / public key size algorithm for DNSSEC.
- Notably, the signature sizes of ECDSA and EdDSA
- smaller than those of equivalent cryptographic strength using RSA.
+Notably, the signature sizes of ECDSA and EdDSA
+are smaller than those of equivalent cryptographic strength using RSA.
 
 Protocol compliance considerations {#protocol}
 ===========
 
 Some authoritative servers deviate from the DNS standard as follows:
 
-- Some authoritative servers ignore the EDNS0 requestor's maximum UDP payload size, and return large UDP responses. [Fujiwara2018]
+- Some authoritative servers ignore the EDNS0 requestor's maximum UDP payload size and return large UDP responses. [Fujiwara2018]
 
 - Some authoritative servers do not support TCP transport.
 
@@ -313,7 +314,7 @@ On-path fragmentation on IPv4
 
 If the Don't Fragment (DF) bit is not set,
 on-path fragmentation may happen on IPv4,
-and be vulnerable as shown in {{ProblemOfFragmentation}}.
+and be vulnerable, as shown in {{ProblemOfFragmentation}}.
 To avoid this, recommendation R7 SHOULD be used
 to discard the fragmented responses and retry by TCP.
 
@@ -321,8 +322,8 @@ Small MTU network
 ---------
 
 When avoiding fragmentation,
-a DNS/UDP requestor behind a small-MTU network may experience
-UDP timeouts which would reduce performance
+a DNS/UDP requestor behind a small MTU network may experience
+UDP timeouts, which would reduce performance
 and which may lead to TCP fallback.
 This would indicate prior reliance upon IP fragmentation,
 which is considered to be harmful
@@ -353,8 +354,8 @@ along the path to the destination.
 A DNS message receiver cannot trust fragmented UDP datagrams primarily due to
 the small amount of entropy provided by UDP port numbers and DNS message
 identifiers, each of which being only 16 bits in size, and both likely
-being in the first fragment of a packet, if fragmentation occurs.
-By comparison, TCP protocol stack controls packet size and avoids IP fragmentation under ICMP NEEDFRAG attacks.
+being in the first fragment of a packet if fragmentation occurs.
+By comparison, the TCP protocol stack controls packet size and avoids IP fragmentation under ICMP NEEDFRAG attacks.
 In TCP, fragmentation should be avoided for performance reasons, whereas for
 UDP, fragmentation should be avoided for resiliency and authenticity reasons.
 
@@ -446,13 +447,13 @@ a DNS server to make response packets smaller, containing only mandatory and
 required data.
 
 Under the minimal-responses configuration,
-a DNS server composes responses containing only nessesary RRs.
+a DNS server composes responses containing only necessary RRs.
 For delegations, see {{?RFC9471}}.
 In case of a non-existent domain name or non-existent type, 
 the authority section will contain an SOA record and the answer section is empty.
 (defined in Section 2 of {{?RFC2308}}).
 
-Some resource records (MX, SRV, SVCB, HTTTPS) require
+Some resource records (MX, SRV, SVCB, HTTPS) require
 additional A, AAAA, and SVCB records
 in the Additional Section
 defined in {{?RFC1035}}, {{?RFC2782}} and {{?RFC9460}}.
