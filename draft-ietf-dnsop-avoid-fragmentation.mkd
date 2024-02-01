@@ -172,14 +172,14 @@ segment. In contrast, DNS over UDP has little datagram size elasticity and
 lacks insight into IP header and option size, so we must make more
 conservative estimates about available UDP payload space.
 
-{{?RFC7766}} states that all general-purpose DNS
+{{!RFC7766}} states that all general-purpose DNS
 implementations MUST support both UDP and TCP transport.
 
-DNS transaction security {{?RFC8945}} {{?RFC2931}} does protect
+DNS transaction security {{!RFC8945}} {{!RFC2931}} does protect
 against the security risks of fragmentation, including protecting
-delegation responses. But {{?RFC8945}} has limited applicability due
+delegation responses. But {{!RFC8945}} has limited applicability due
 to key distribution requirements and there is little if any deployment
-of {{?RFC2931}}.
+of {{!RFC2931}}.
 
 This document specifies various techniques to avoid IP fragmentation
 of UDP packets in DNS.
@@ -229,7 +229,7 @@ Recommendations for UDP responders {#RecommendationsResponders}
 R1. UDP responders SHOULD NOT use IPv6 fragmentation {{!RFC8200}}.
 
 R2. Where supported, UDP responders SHOULD set
-    IP "Don't Fragment flag (DF) bit" [RFC0791] on IPv4.
+    IP "Don't Fragment flag (DF) bit" {{!RFC0791}} on IPv4.
 
   At the time of writing, most DNS server software did not set the DF bit
   for IPv4,
@@ -343,10 +343,10 @@ off-path DNS cache poisoning attack vectors using IP fragmentation.
 "IP fragmentation attack on DNS" [Hlavacek2013] and "Domain Validation++
 For MitM-Resilient PKI" [Brandt2018] proposed that off-path attackers
 can intervene in the path MTU discovery {{!RFC1191}} to perform intentionally
-fragmented responses from authoritative servers. {{?RFC7739}} stated the
+fragmented responses from authoritative servers. {{!RFC7739}} stated the
 security implications of predictable fragment identification values.
 
-In Section 3.2 (Message Side Guidelines) of UDP Usage Guidelines {{?RFC8085}}
+In Section 3.2 (Message Side Guidelines) of UDP Usage Guidelines {{!RFC8085}}
 we are told that an application SHOULD NOT send UDP datagrams
 that result in IP packets that exceed the Maximum Transmission Unit (MTU)
 along the path to the destination.
