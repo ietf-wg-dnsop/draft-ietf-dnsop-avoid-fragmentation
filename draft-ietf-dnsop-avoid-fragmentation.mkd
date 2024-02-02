@@ -1,5 +1,5 @@
 ---
-title: IP Fragmentation Avoidance in DNS
+title: IP Fragmentation Avoidance in DNS over UDP
 abbrev: avoid-fragmentation
 docname: draft-ietf-dnsop-avoid-fragmentation-17
 
@@ -243,7 +243,7 @@ R2. UDP responders SHOULD set IP "Don't Fragment flag (DF) bit" {{!RFC0791}} on 
   server software does not do yet, so R2, which is setting the DF bit, is "SHOULD"
   rather than "MUST".
 
-R3. UDP responders SHOULD compose response packets that fit in the minimum of
+R3. UDP responders MUST compose response packets that fit in the minimum of
   the offered requestor's maximum UDP payload size {{!RFC6891}},
   the interface MTU,
   and the RECOMMENDED maximum DNS/UDP payload size 1400 as a safe value based
@@ -255,7 +255,9 @@ R4. If the UDP responder detects an immediate error indicating
   or with the TC bit set.
 
 R5. UDP responders SHOULD limit the response size
-  when UDP responders are located on small MTU (<1500) networks.
+  when UDP responders are located on small MTU (<1500) networks to either
+  the network MTU or a few (eg 20) bytes below such network MTU if it is
+  known that encapsulation techniques are deployed on that network.
 
   The cause and effect of the TC bit are unchanged from EDNS0 {{!RFC6891}}.
 
@@ -514,7 +516,7 @@ option, with the default of 1232.
 
 BIND 9 does implement recommendation 2 of {{RecommendationsRequestors}}.
 
-For recommendation 3, after two UDP timeouts, BIND 9 will fallback to TCP.
+For recommendation 3, after two UDP timeouts, BIND 9 will fall back to TCP.
 
 Knot DNS and Knot Resolver
 ----
