@@ -233,7 +233,7 @@ The methods to avoid IP fragmentation in DNS are described below:
 Recommendations for UDP responders {#RecommendationsResponders}
 -----------------------------------
 
-R1. UDP responders SHOULD send DNS responses
+R1. UDP responders MUST send DNS responses
   without "Fragment header" {{!RFC8200}} on IPv6.
 
 R2. UDP responders SHOULD set IP "Don't Fragment flag (DF) bit" {{!RFC0791}} on IPv4.
@@ -276,6 +276,7 @@ R8. DNS responses may be dropped by IP fragmentation.
   UDP requestors SHOULD retry using TCP
   or UDP with a smaller EDNS requestor's maximum UDP payload size
   per local policy.
+  UDP requestors MUST observe {{!RFC8961}} in setting their timeout.
 
 Recommendations for zone operators and DNS server operators {#RecommendationOperators}
 =============
