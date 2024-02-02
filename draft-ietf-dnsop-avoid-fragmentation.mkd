@@ -126,6 +126,21 @@ informative:
     seriesinfo: OARC 34 Workshop
     date: Feb. 4, 2021
 
+  DefragmentingDNS:
+    title: Determining the optimal maximum UDP response size for DNS
+    author:
+      -
+        ins: A. Koolhaas
+        name: Axel Koolhaas
+        org: University of Amsterdam
+      -
+        ins: T. Slokker
+        name: Tjeerd Slokker
+        org: University of Amsterdam
+      -
+    seriesinfo: OARC 32b Workshop
+    date: Aug. 11, 2020
+
 --- abstract
 
 The widely
@@ -224,14 +239,15 @@ R1. UDP responders SHOULD send DNS responses
 R2. UDP responders SHOULD set IP "Don't Fragment flag (DF) bit" {{!RFC0791}} on IPv4.
 
   At the time of writing, most DNS server software did not set the DF bit for IPv4,
-  and many OS kernel constraints make it difficult to set the DF bit in all cases.
-  Best Current Practice documents should not mandate what might be impossible in
-  some circumstances so R2, which is setting the DF bit, is "SHOULD" rather than "MUST".
+  Best Current Practice documents should not mandate something a majority of DNS
+  server software does not do yet, so R2, which is setting the DF bit, is "SHOULD"
+  rather than "MUST".
 
 R3. UDP responders SHOULD compose response packets that fit in the minimum of
   the offered requestor's maximum UDP payload size {{!RFC6891}},
   the interface MTU,
-  and the RECOMMENDED maximum DNS/UDP payload size 1400.
+  and the RECOMMENDED maximum DNS/UDP payload size 1400 as a safe value based
+  on various meassurement experiments such as [DefragmentingDNS] and [Huston2021].
 
 R4. If the UDP responder detects an immediate error indicating
   that the UDP packet cannot be sent beyond the path MTU size (EMSGSIZE),
@@ -266,7 +282,9 @@ Large DNS responses are typically the result of zone configuration.
 Zone operators SHOULD seek configurations resulting in small responses.
 For example,
 
-R9. Use a smaller number of name server names (13 may be too large)
+R9. Use a smaller number of name server names. While the root zone uses 13 name server names,
+  these are carefully orchestrated to use similar names along with compression and 13 might
+  be a too large a number for other deployments.
 
 R10. Use a smaller number of A/AAAA RRs for a domain name
 
@@ -405,7 +423,7 @@ default path MTU size and requestor's maximum UDP payload size.
   Maximum DNS/UDP payload size for IPv6 on MTU 1500 ethernet is
   1452 (1500 minus 40 (IPv6 header size) minus 8 (UDP header size)).
   To allow for possible IP options and distant tunnel overhead,
-  the authors' recommendation of default maximum DNS/UDP payload size is 1400.
+  the recommendation of default maximum DNS/UDP payload size is 1400.
 
 - {{?RFC4035}} defines that "A security-aware name server MUST support
   the EDNS0 message size extension, MUST support a message
@@ -428,6 +446,10 @@ default path MTU size and requestor's maximum UDP payload size.
   in this part of the Internet, and proposed that
   their measurements suggest setting the EDNS0 requestor's UDP payload size to
   1472 octets for IPv4, and 1452 octets for IPv6.
+
+- [DefragmentingDNS] concluded there is no single "magical" MTU message
+  size for DNS resolver implementations, but pointed out some safe values
+  for stub resolvers at 1400 for IPv4 and 1280 for IPv6.
 
 Minimal-responses {#minimal-responses}
 ======
