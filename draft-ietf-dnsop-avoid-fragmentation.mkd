@@ -143,16 +143,15 @@ informative:
 
 --- abstract
 
-The widely
-deployed EDNS0 feature in the DNS enables a DNS receiver to indicate
-its received UDP message size capacity which supports the sending of
-large UDP responses by a DNS server.
-Large DNS/UDP responses are fragmented,
-and IP fragmentation has exposed weaknesses in application protocols.
-It is possible to avoid IP fragmentation in DNS by limiting response
-size where possible, and signaling the need to upgrade from UDP to TCP
-transport where necessary.
-This document specifies techniques to avoid IP fragmentation in DNS.
+The widely deployed EDNS0 feature in the DNS enables a DNS receiver to
+indicate its received UDP message size capacity which supports the sending
+of large (eg 1500 or larger jumbo frame) UDP responses by a DNS server.
+Such large DNS/UDP responses can and often do encounter fragmentation,
+and this IP fragmentation has exposed weaknesses in application protocols,
+such as DNS.  It is possible to avoid IP fragmentation in DNS by limiting
+response size where possible, and signaling the need to upgrade from UDP
+to TCP transport where necessary.  This document specifies techniques
+to avoid IP fragmentation in DNS.
 
 --- middle
 
@@ -250,7 +249,7 @@ R3. UDP responders MUST compose response packets that fit in the minimum of
   on various meassurement experiments such as [DefragmentingDNS] and [Huston2021].
 
 R4. If the UDP responder detects an immediate error indicating
-  that the UDP packet cannot be sent beyond the path MTU size (EMSGSIZE),
+  that the UDP packet cannot be sent beyond the path MTU size (eg Unix error code EMSGSIZE),
   the UDP responder MAY recreate response packets fit in path MTU size,
   or with the TC bit set.
 
@@ -268,7 +267,11 @@ R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size to
   the RECOMMENDED size of 1400 or a smaller size.
 
 R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
-  to avoid cache poisoning attacks.
+  to avoid fragmentation related cache poisoning attacks. Fragmentation related
+  cache poisoning attacks are easier to execute compared to single packet cache
+  poisoning attacks as only the first fragment contains the defense mechanisms
+  against (off-path) spoofing attacks (via randomized TXID and UDP source port
+  randomization).
 
 R8. DNS responses may be dropped by IP fragmentation.
   Upon a timeout, 
