@@ -236,8 +236,7 @@ R2. UDP responders SHOULD set IP "Don't Fragment flag (DF) bit" [RFC0791] on IPv
 
 R3. UDP responders SHOULD compose response packets that fit in the minimum of
   the offered requestor's maximum UDP payload size [RFC6891],
-  the interface MTU,
-  and the RECOMMENDED maximum DNS/UDP payload size 1400.
+  the interface MTU, and the RECOMMENDED maximum DNS/UDP payload size 1400 (see {{details}}).
 
 R4. If the UDP responder detects an immediate error indicating
   that the UDP packet cannot be sent beyond the path MTU size (EMSGSIZE),
@@ -254,7 +253,7 @@ Recommendations for UDP requestors {#RecommendationsRequestors}
 -----------------------------------
 
 R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size to
-  the RECOMMENDED size of 1400 or a smaller size.
+  the RECOMMENDED size of 1400 or a smaller size (see {{details}}).
 
 R7. UDP requestors MAY drop fragmented DNS/UDP responses without IP reassembly
   to avoid cache poisoning attacks.
