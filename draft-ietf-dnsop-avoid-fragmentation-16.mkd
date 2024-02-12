@@ -312,10 +312,8 @@ On-path fragmentation on IPv4
 If the Don't Fragment (DF) bit is not set,
 on-path fragmentation may happen on IPv4,
 and be vulnerable as shown in {{ProblemOfFragmentation}}.
-To avoid this, recommendation R7 should be used
+To avoid this, recommendation R7 SHOULD be used
 to discard the fragmented responses and retry by TCP.
-
-In the future, recommendation R2 could be changed from "MAY" to "SHOULD".
 
 Small MTU network
 ---------
@@ -344,14 +342,6 @@ can intervene in path MTU discovery [RFC1191] to perform intentionally
 fragmented responses from authoritative servers. [RFC7739] stated the
 security implications of predictable fragment identification values.
 
-DNSSEC is a countermeasure against cache poisoning attacks that use
-IP fragmentation.
-However, DNS delegation responses are not signed with DNSSEC,
-and DNSSEC does not have a mechanism to get the correct response if
-an incorrect delegation is injected. This is a denial-of-service
-vulnerability that can yield failed name resolutions.
-If cache poisoning attacks can be avoided,
-DNSSEC validation failures will be avoided.
 
 In Section 3.2 (Message Side Guidelines) of UDP Usage Guidelines [RFC8085]
 we are told that an application SHOULD NOT send UDP datagrams
@@ -365,6 +355,16 @@ being in the first fragment of a packet, if fragmentation occurs.
 By comparison, TCP protocol stack controls packet size and avoids IP fragmentation under ICMP NEEDFRAG attacks.
 In TCP, fragmentation should be avoided for performance reasons, whereas for
 UDP, fragmentation should be avoided for resiliency and authenticity reasons.
+
+DNS Security Protections {#dnssec}
+---------
+DNSSEC is a countermeasure against cache poisoning attacks that use IP fragmentation.
+However, DNS delegation responses are not signed with DNSSEC,
+and DNSSEC does not have a mechanism to get the correct response if
+an incorrect delegation is injected. This is a denial-of-service
+vulnerability that can yield failed name resolutions.
+If cache poisoning attacks can be avoided,
+DNSSEC validation failures will be avoided.
 
 Acknowledgments
 =====
