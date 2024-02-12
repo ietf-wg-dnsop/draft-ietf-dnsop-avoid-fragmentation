@@ -245,7 +245,8 @@ R4. If the UDP responder detects an immediate error indicating
   or with the TC bit set.
 
 R5. UDP responders SHOULD limit the response size
-  when UDP responders are located on small MTU (<1500) networks.
+  when UDP responders are located on small MTU (<1500) networks to be
+  within or at the small MTU size to avoid fragmentation.
 
   The cause and effect of the TC bit are unchanged from EDNS0 [RFC6891].
 
