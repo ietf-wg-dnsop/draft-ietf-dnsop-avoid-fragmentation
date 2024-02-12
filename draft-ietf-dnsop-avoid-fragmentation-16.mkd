@@ -265,7 +265,7 @@ R8. DNS responses may be dropped by IP fragmentation.
   or UDP with a smaller EDNS requestor's maximum UDP payload size
   per local policy.
 
-Recommendations for zone operators and DNS server operators {#RecommendationOperators}
+Recommendations for DNS content operators and DNS server operators {#RecommendationOperators}
 =============
 
 Large DNS responses are typically the result of zone configuration.
