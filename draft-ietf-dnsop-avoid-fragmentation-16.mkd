@@ -252,8 +252,8 @@ R5. UDP responders SHOULD limit the response size
 Recommendations for UDP requestors {#RecommendationsRequestors}
 -----------------------------------
 
-R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size to
-  the RECOMMENDED size of 1400 or a smaller size (see {{details}}).
+R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size. It is
+  RECOMMENDED to use a size of 1400 or smaller (see {{details}}).
 
 R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
   to avoid cache poisoning attacks.
