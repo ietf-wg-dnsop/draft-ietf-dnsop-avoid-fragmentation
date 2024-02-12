@@ -224,49 +224,47 @@ The methods to avoid IP fragmentation in DNS are described below:
 Recommendations for UDP responders {#RecommendationsResponders}
 -----------------------------------
 
-R1. UDP responders SHOULD send DNS responses
-  without "Fragment header" [RFC8200] on IPv6.
+R1. UDP responders SHOULD NOT fragment DNS responses on IPv6.
 
-R2. UDP responders MAY set IP "Don't Fragment flag (DF) bit" [RFC0791] on IPv4.
+R2. UDP responders SHOULD set IP "Don't Fragment flag (DF) bit" [RFC0791] on IPv4.
 
   At the time of writing, most DNS server software did not set the DF bit
   for IPv4,
-  and many OS kernel constraints make it difficult to set the DF bit in all cases.
+  and many Operating System kernel constraints make it difficult to set the DF bit in all cases.
   Best Current Practice documents should not specify what is currently impossible,
   so R2, which is setting the DF bit, is "MAY" rather than "SHOULD".
 
 R3. UDP responders SHOULD compose response packets that fit in the minimum of
   the offered requestor's maximum UDP payload size [RFC6891],
-  the interface MTU,
-  and the RECOMMENDED maximum DNS/UDP payload size 1400.
+  the interface MTU, and the RECOMMENDED maximum DNS/UDP payload size 1400 (see {{details}}).
 
 R4. If the UDP responder detects an immediate error indicating
   that the UDP packet cannot be sent beyond the path MTU size (EMSGSIZE),
-  the UDP responder MAY recreate response packets fit in path MTU size,
-  or with the TC bit set.
+  the UDP responder MAY recreate the response packets to fit in path MTU size
+  with the TC bit set.
 
 R5. UDP responders SHOULD limit the response size
-  when UDP responders are located on small MTU (<1500) networks.
+  when UDP responders are located on small MTU (<1500) networks to be
+  within or at the small MTU size to avoid fragmentation.
 
   The cause and effect of the TC bit are unchanged from EDNS0 [RFC6891].
 
 Recommendations for UDP requestors {#RecommendationsRequestors}
 -----------------------------------
 
-R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size to
-  the RECOMMENDED size of 1400 or a smaller size.
+R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size. It is
+  RECOMMENDED to use a size of 1400 or smaller (see {{details}}).
 
-R7. UDP requestors MAY drop fragmented DNS/UDP responses without IP reassembly
+R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
   to avoid cache poisoning attacks.
 
 R8. DNS responses may be dropped by IP fragmentation.
-  Upon a timeout, 
-  to avoid resolution failures,
-  UDP requestors MAY retry using TCP
+  Upon a timeout, to avoid resolution failures,
+  UDP requestors SHOULD retry using TCP
   or UDP with a smaller EDNS requestor's maximum UDP payload size
-  per local policy.
+  per local policy. UDP requestors MUST observe {{!RFC8961}} in setting their timeout.
 
-Recommendations for zone operators and DNS server operators {#RecommendationOperators}
+Recommendations for DNS content operators and DNS server operators {#RecommendationOperators}
 =============
 
 Large DNS responses are typically the result of zone configuration.
@@ -288,12 +286,12 @@ R12. Use a smaller signature / public key size algorithm for DNSSEC.
 Protocol compliance considerations {#protocol}
 ===========
 
-Prior research [Fujiwara2018]
-has shown that some authoritative servers
-ignore the EDNS0 requestor's maximum UDP payload size, and return large UDP responses.
+Some authoritative servers deviate from the DNS standard.
 
-It is also well known that some authoritative servers do not
-support TCP transport.
+[Fujiwara2018] has shown that some authoritative servers ignore the EDNS0 requestor's
+maximum UDP payload size, and return large UDP responses.
+
+It is also well known that some authoritative servers do not support TCP transport.
 
 Such non-compliant behavior cannot become implementation or configuration
 constraints for the rest of the DNS. If failure is the result, then that
@@ -314,10 +312,8 @@ On-path fragmentation on IPv4
 If the Don't Fragment (DF) bit is not set,
 on-path fragmentation may happen on IPv4,
 and be vulnerable as shown in {{ProblemOfFragmentation}}.
-To avoid this, recommendation R7 should be used
+To avoid this, recommendation R7 SHOULD be used
 to discard the fragmented responses and retry by TCP.
-
-In the future, recommendation R2 could be changed from "MAY" to "SHOULD".
 
 Small MTU network
 ---------
@@ -346,14 +342,6 @@ can intervene in path MTU discovery [RFC1191] to perform intentionally
 fragmented responses from authoritative servers. [RFC7739] stated the
 security implications of predictable fragment identification values.
 
-DNSSEC is a countermeasure against cache poisoning attacks that use
-IP fragmentation.
-However, DNS delegation responses are not signed with DNSSEC,
-and DNSSEC does not have a mechanism to get the correct response if
-an incorrect delegation is injected. This is a denial-of-service
-vulnerability that can yield failed name resolutions.
-If cache poisoning attacks can be avoided,
-DNSSEC validation failures will be avoided.
 
 In Section 3.2 (Message Side Guidelines) of UDP Usage Guidelines [RFC8085]
 we are told that an application SHOULD NOT send UDP datagrams
@@ -367,6 +355,16 @@ being in the first fragment of a packet, if fragmentation occurs.
 By comparison, TCP protocol stack controls packet size and avoids IP fragmentation under ICMP NEEDFRAG attacks.
 In TCP, fragmentation should be avoided for performance reasons, whereas for
 UDP, fragmentation should be avoided for resiliency and authenticity reasons.
+
+DNS Security Protections {#dnssec}
+---------
+DNSSEC is a countermeasure against cache poisoning attacks that use IP fragmentation.
+However, DNS delegation responses are not signed with DNSSEC,
+and DNSSEC does not have a mechanism to get the correct response if
+an incorrect delegation is injected. This is a denial-of-service
+vulnerability that can yield failed name resolutions.
+If cache poisoning attacks can be avoided,
+DNSSEC validation failures will be avoided.
 
 Acknowledgments
 =====
@@ -449,17 +447,17 @@ the authority section will contain an SOA record and the answer section is empty
 Some resource records (MX, SRV, SVCB, HTTTPS) require
 additional A, AAAA, and SVCB records
 in the Additional Section
-defined in {{?RFC1035}}, {{?RFC2782}} and {{?I-D.ietf-dnsop-svcb-https}}.
+defined in {{?RFC1035}}, {{?RFC2782}} and {{?RFC9460}}.
 
 In addition, if the zone is DNSSEC signed and a query has the DNSSEC OK bit,
 signatures are added in the answer section,
 or the corresponding DS RRSet and signatures are added in the authority section.
 Details are defined in {{?RFC4035}} and {{?RFC5155}}.
 
-Known Implementations
+Implementation Status
 ==========
 
-(This section may be removed by the RFC editor.)
+[ Note to RFC Editor: remove this section before publication ]
 
 This section records the status of known implementations of these best
 practices defined by this specification at the time of publication, and any
@@ -495,7 +493,7 @@ option, with the default of 1232.
 
 BIND 9 does implement recommendation 2 of {{RecommendationsRequestors}}.
 
-For recommendation 3, after two UDP timeouts, BIND 9 will fallback to TCP.
+For recommendation 3, after two UDP timeouts, BIND 9 will fall back to TCP.
 
 Knot DNS and Knot Resolver
 ----
