@@ -448,7 +448,7 @@ the authority section will contain an SOA record and the answer section is empty
 Some resource records (MX, SRV, SVCB, HTTTPS) require
 additional A, AAAA, and SVCB records
 in the Additional Section
-defined in {{?RFC1035}}, {{?RFC2782}} and {{?I-D.ietf-dnsop-svcb-https}}.
+defined in {{?RFC1035}}, {{?RFC2782}} and {{?RFC9460}}.
 
 In addition, if the zone is DNSSEC signed and a query has the DNSSEC OK bit,
 signatures are added in the answer section,
@@ -494,7 +494,7 @@ option, with the default of 1232.
 
 BIND 9 does implement recommendation 2 of {{RecommendationsRequestors}}.
 
-For recommendation 3, after two UDP timeouts, BIND 9 will fallback to TCP.
+For recommendation 3, after two UDP timeouts, BIND 9 will fall back to TCP.
 
 Knot DNS and Knot Resolver
 ----
