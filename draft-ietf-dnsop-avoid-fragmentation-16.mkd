@@ -454,10 +454,10 @@ signatures are added in the answer section,
 or the corresponding DS RRSet and signatures are added in the authority section.
 Details are defined in {{?RFC4035}} and {{?RFC5155}}.
 
-Known Implementations
+Implementation Status
 ==========
 
-(This section may be removed by the RFC editor.)
+[ Note to RFC Editor: remove this section before publication ]
 
 This section records the status of known implementations of these best
 practices defined by this specification at the time of publication, and any
