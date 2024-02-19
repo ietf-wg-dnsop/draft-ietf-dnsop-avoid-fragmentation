@@ -185,8 +185,8 @@ This document specifies various techniques to avoid IP fragmentation
 of UDP packets in DNS.
 This document is primarily applicable to DNS use on the global Internet.
 
-REMOVE: In contrast, a path MTU that deviates from the
-recommended value can be obtained through static configuration, server
+In contrast, a path MTU that deviates from the
+recommended value might be obtained through static configuration, server
 routing hints, or a future discovery protocol.  However, addressing
 this falls outside the scope of this document and may be the subject
 of future specifications.

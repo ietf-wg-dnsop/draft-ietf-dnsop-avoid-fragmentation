@@ -149,7 +149,7 @@ fixed
 |affecting transit devices so as to limit/expand the path MTU? What's going on
 |here?
 
-***** I would like to remove it.
+Changed the part as new paragraph, and changed "can be" as "might be".
 
 |Section 3., first paragraph: So, down here we learn that private/local
 |networks are out of scope. This limitation should be earlier, like in the
