@@ -1,27 +1,5 @@
-|review-ietf-dnsop-avoid-fragmentation-15-genart-lc-holmberg-2023-10-23-00
-|I am the assigned Gen-ART reviewer for this draft. The General Area
-|Review Team (Gen-ART) reviews all IETF documents being processed
-|by the IESG for the IETF Chair.  Please treat these comments just
-|like any other last call comments.
-|
-|For more information, please see the FAQ at
-|
-|<https://wiki.ietf.org/en/group/gen/GenArtFAQ>.
-|
-|review-ietf-dnsop-avoid-fragmentation-15-tsvart-lc-kuehlewind-2023-10-22-00
-|This document has been reviewed as part of the transport area review team's
-|ongoing effort to review key IETF documents. These comments were written
-|primarily for the transport area directors, but are copied to the document's
-|authors and WG to allow them to address any issues raised and also to the IETF
-|discussion list for information.
-|
-|When done at the time of IETF Last Call, the authors should consider this
-|review as part of the last-call comments they receive. Please always CC
-|tsv-art@ietf.org if you reply to or forward this review.
-|
-|Thanks for the document; it's straight-forward but probably important to write
-|down.
-|
+* Tsvart: Mirja Kuhlewind
+
 |I have two editorial comments and one request:
 |
 |1) I would really recommend including "IP" in the document title to be absolute
@@ -50,19 +28,8 @@ changed in -16 as proposed.
 
 Added reference to RFC 8961 proposed by Martin Duke.
 
-|Document: draft-ietf-dnsop-avoid-fragmentation-15
-|Reviewer: Christer Holmberg
-|Review Date: 2023-10-23
-|IETF LC End Date: 2023-10-27
-|IESG Telechat date: Not scheduled for a telechat
-|
-|Summary: The document is well written, and easy to read and understand. I only
-|have one minor issue/question that I'd like the authors to address.
-|
-|Major issues: N/A
-|
-|Minor issues:
-|
+* Genart: Christer Holmberg
+
 |Q1: R3 and R6 mentions the recommended size of 1400. I think it would be useful
 |with a reference to Annex B, where this value is justified.
 
@@ -70,20 +37,7 @@ Added "(See Appendix A for details.)" in both R3 and R6.
 
 |Nits/editorial comments: N/A
 
-|Subject: SECDIR review of draft-ietf-dnsop-avoid-fragmentation-16
-|From: Donald Eastlake <d3e3e3@gmail.com>
-|To: "iesg@ietf.org" <iesg@ietf.org>,
-|        draft-ietf-dnsop-avoid-fragmentation.all@ietf.org
-|Cc: Last Call <last-call@ietf.org>, secdir <secdir@ietf.org>
-|Date: Thu, 28 Dec 2023 00:44:15 -0500
-|Resent-Message-Id: <20231228054433.6F6A2C14F6AB@ietfa.amsl.com>
-|X-Mew: Text/Html in Multipart/Alternative as a singlepart
-|
-|I have reviewed this document as part of the security directorate's ongoing
-|effort to review all IETF documents being processed by the IESG. Document
-|editors and WG chairs should treat these comments just like any other last
-|call comments.
-|
+* Secdir: Donald Eastlake
 |The summary of the review is Ready with Issues.
 |
 |Security
@@ -220,20 +174,7 @@ fixed
 
   changed as proposed.
 
-| Subject: [DNSOP] Artart telechat review of draft-ietf-dnsop-avoid-fragmentation-16
-| From: Barry Leiba via Datatracker <noreply@ietf.org>
-| To: <art@ietf.org>
-| Cc: dnsop@ietf.org, draft-ietf-dnsop-avoid-fragmentation.all@ietf.org,
-|         last-call@ietf.org
-| Date: Fri, 29 Dec 2023 19:40:52 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Barry Leiba <barryleiba@computer.org>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/qF54AS66r0Qi8c3fLLD89vfe9Kw>
-| 
-| Reviewer: Barry Leiba
-| Review result: Ready with Nits
-| 
+* Artart: Barry Leiba
 | Thanks for addressing most comments from my earlier review.  One remains, and I
 | didn't see an email response about it, so I don't know whether there was a
 | reason not to make a change or if it just got overlooked:
@@ -253,35 +194,7 @@ fixed
 
 edited as Paul Vixie proposed.
 
-| Subject: [DNSOP] Martin Duke's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS and COMMENT)
-| From: Martin Duke via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
-|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
-|         tjw.ietf@gmail.com
-| Date: Tue, 02 Jan 2024 11:44:09 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Martin Duke <martin.h.duke@gmail.com>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/sgoSHMc_boOWxpIcx1YfnoDS5xk>
-| 
-| Martin Duke has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: Discuss
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-| 
-| 
+* DISCUSS: Martin Duke
 | ----------------------------------------------------------------------
 | DISCUSS:
 | ----------------------------------------------------------------------
@@ -328,34 +241,7 @@ Robert Wilton's DISCUSS proposed another fix.
 
   R1 is changed as "R1. UDP responders SHOULD NOT use IPv6 fragmentation {{!RFC8200}}."
 
-| Subject: [DNSOP] Murray Kucherawy's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS and COMMENT)
-| From: Murray Kucherawy via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
-|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com
-| Date: Wed, 03 Jan 2024 23:06:39 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Murray Kucherawy <superuser@gmail.com>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/MmRQNzgwKAQ0Qqc7gTV9WzM2GaM>
-| 
-| Murray Kucherawy has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: Discuss
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-| 
-| 
+* Murray Kucherawy's Discuss
 | ----------------------------------------------------------------------
 | DISCUSS:
 | ----------------------------------------------------------------------
@@ -403,15 +289,7 @@ simply removed EMSGSIZE.
 
 ***** fujiwara: I think they are rare.
 
-| Subject: Re: [DNSOP] Murray Kucherawy's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS and COMMENT)
-| From: Joe Abley <jabley@strandkip.nl>
-| To: Murray Kucherawy <superuser@gmail.com>
-| Cc: The IESG <iesg@ietf.org>, draft-ietf-dnsop-avoid-fragmentation@ietf.org,
-|         dnsop-chairs@ietf.org, dnsop@ietf.org, benno@nlnetlabs.nl,
-|         swoolf@pir.org, tjw.ietf@gmail.com
-| Date: Thu, 4 Jan 2024 09:28:03 +0100
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| 
+* Murray Kucherawy's Discuss -> Joe Abley 's comment
 | On 4 Jan 2024, at 08:21, Murray Kucherawy via Datatracker <noreply@ietf.org> wrote:
 | 
 | > "Recommendations for zone operators and DNS server operators"
@@ -432,35 +310,7 @@ simply removed EMSGSIZE.
 changed section title: Recommendations for DNS operators
 second sentence: People who publish information in the DNS SHOULD
 
-| Subject: [DNSOP] Robert Wilton's Discuss on draft-ietf-dnsop-avoid-fragmentation-16: (with DISCUSS)
-| From: Robert Wilton via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
-|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
-|         tjw.ietf@gmail.com
-| Date: Tue, 02 Jan 2024 07:41:02 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Robert Wilton <rwilton@cisco.com>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/ypY75qNCRzm3p1lvl7RMxGMTPu8>
-| 
-| Robert Wilton has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: Discuss
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-| 
-| 
+* Robert Wilton's Discuss
 | ----------------------------------------------------------------------
 | DISCUSS:
 | ----------------------------------------------------------------------
@@ -529,6 +379,9 @@ changed as "SHOULD"
 | 
 |    R7.  UDP requestors MAY drop fragmented DNS/UDP responses without IP
 |    reassembly to avoid cache poisoning attacks.
+
+
+
 |    R8.  DNS responses may be dropped by IP fragmentation.  Upon a
 |    timeout, to avoid resolution failures, UDP requestors MAY retry using
 |    TCP or UDP with a smaller EDNS requestor's maximum UDP payload size
@@ -539,35 +392,7 @@ changed as "SHOULD"
 
 ****** currently, not changed
 
-| Subject: [DNSOP] Paul Wouters' Yes on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
-From: Paul Wouters via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
-|       dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
-|       tjw.ietf@gmail.com
-| Date: Fri, 29 Dec 2023 11:37:38 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Paul Wouters <paul.wouters@aiven.io>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/17LxlfRw8HNUvd58agPgUdvJcYw>
-| 
-| Paul Wouters has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: Yes
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-
-| 
+* Paul Wouters' Yes 
 | ----------------------------------------------------------------------
 | COMMENT:
 | ----------------------------------------------------------------------
@@ -586,7 +411,9 @@ changed as Robert Wilton's DISCUSS. (SHOULD)
 
 |         R7. UDP requestors MAY drop fragmented DNS/UDP responses without
 |         IP reassembly to avoid cache poisoning attacks.
-| 
+
+changed as Robert Wilton's DISCUSS. (SHOULD)
+
 |         R8. DNS responses may be dropped by IP fragmentation. Upon a
 |         timeout, to avoid resolution failures, UDP requestors MAY retry
 |         using TCP or UDP with a smaller EDNS requestor's maximum UDP
@@ -614,35 +441,7 @@ Removed '(13 may be too large)'.
 
 edited as proposed.
 
-| Subject: [DNSOP] Erik Kline's No Objection on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
-| From: Erik Kline via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
-|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
-|         tjw.ietf@gmail.com
-| Date: Tue, 02 Jan 2024 18:45:55 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Erik Kline <ek.ietf@gmail.com>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/5MorwyjyFoB-sfeh6IMSzRtrvA8>
-| 
-| Erik Kline has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-| 
-| 
+* Erik Kline's No Objection
 | ----------------------------------------------------------------------
 | COMMENT:
 | ----------------------------------------------------------------------
@@ -721,35 +520,7 @@ edited as proposed.
 
 removed "universally"
 
-| Subject: [DNSOP] ÃC3‰89ric Vyncke'27s No Objection on draft-ietf-dnsop-avoid-fragmentation-16:3A (28with COMMENT)29
-| From: Eric Vyncke via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: tjw.ietf@gmail.com, dnsop-chairs@ietf.org, dnsop@ietf.org,
-|         benno@NLnetLabs.nl, swoolf@pir.org,
-|         draft-ietf-dnsop-avoid-fragmentation@ietf.org
-| Date: Thu, 04 Jan 2024 06:48:39 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Eric Vyncke <evyncke@cisco.com>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/oDc5KX_FtY3g8qbHC4dQk1o3FNc>
-| 
-| Eric Vyncke has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-| 
-| 
+* Eric Vyncke's No Objection
 | ----------------------------------------------------------------------
 | COMMENT:
 | ----------------------------------------------------------------------
@@ -798,35 +569,7 @@ Removed '(13 may be too large)'.
 
 removed "authors'".
 
-| Subject: [DNSOP] Lars Eggert's No Objection on draft-ietf-dnsop-avoid-fragmentation-16: (with COMMENT)
-| From: Lars Eggert via Datatracker <noreply@ietf.org>
-| To: "The IESG" <iesg@ietf.org>
-| Cc: draft-ietf-dnsop-avoid-fragmentation@ietf.org, dnsop-chairs@ietf.org,
-|         dnsop@ietf.org, benno@NLnetLabs.nl, swoolf@pir.org, tjw.ietf@gmail.com,
-|         tjw.ietf@gmail.com
-| Date: Thu, 04 Jan 2024 03:55:34 -0800
-| Sender: "DNSOP" <dnsop-bounces@ietf.org>
-| Reply-To: Lars Eggert <lars@eggert.org>
-| Auto-Submitted: auto-generated
-| Archived-At: <https://mailarchive.ietf.org/arch/msg/dnsop/BwQNPQ88u4vo-UoU2tUMzvN-IWI>
-| 
-| Lars Eggert has entered the following ballot position for
-| draft-ietf-dnsop-avoid-fragmentation-16: No Objection
-| 
-| When responding, please keep the subject line intact and reply to all
-| email addresses included in the To and CC lines. (Feel free to cut this
-| introductory paragraph, however.)
-| 
-| 
-| Please refer to https://www.ietf.org/about/groups/iesg/statements/handling-ballot-positions/ 
-| for more information about how to handle DISCUSS and COMMENT positions.
-| 
-| 
-| The document, along with other ballot positions, can be found here:
-| https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/
-| 
-| 
-| 
+* Lars Eggert's No Objection
 | ----------------------------------------------------------------------
 | COMMENT:
 | ----------------------------------------------------------------------
