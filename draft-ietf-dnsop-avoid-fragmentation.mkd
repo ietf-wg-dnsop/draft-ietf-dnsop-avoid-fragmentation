@@ -262,7 +262,7 @@ R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembl
 R8. DNS responses may be dropped by IP fragmentation.
   Upon a timeout, 
   to avoid resolution failures,
-  UDP requestors MAY retry using TCP
+  UDP requestors SHOULD retry using TCP
   or UDP with a smaller EDNS requestor's maximum UDP payload size
   per local policy.
   UDP requestors SHOULD observe {{!RFC8961}} in setting their timeout.
@@ -286,6 +286,10 @@ R11. Use minimal-responses configuration:
 R12. Use a smaller signature / public key size algorithm for DNSSEC.
 Notably, the signature sizes of ECDSA and EdDSA
 are smaller than those of equivalent cryptographic strength using RSA.
+
+It is difficult to determine a specific upper limit for R9, R10, and
+R12, but it is sufficient if all responses from the DNS servers are
+below the size of R3 and R6.
 
 Protocol compliance considerations {#protocol}
 ===========

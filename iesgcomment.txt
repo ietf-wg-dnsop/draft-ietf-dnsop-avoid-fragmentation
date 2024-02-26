@@ -279,7 +279,10 @@ simply removed EMSGSIZE.
 | 
 | * Define "large / small" better.
 
-***** fujiwara: It is hard for me
+Added new text after R9, R10, R12:
+  It is difficult to determine a specific upper limit for R9, R10, and
+  R12, but it is sufficient if all responses from the DNS servers are
+  below the size of R3 and R6.
 
 | "Protocol compliance considerations"
 
@@ -390,7 +393,9 @@ changed as "SHOULD"
 | Again, I think that this document would be clearer if this was a SHOULD rather
 | than a MAY.
 
-****** currently, not changed
+Since all implementations do some kind of retries,
+the details are left to the implementer,
+so I think we can change "MAY" to "SHOULD".
 
 * Paul Wouters' Yes 
 | ----------------------------------------------------------------------
