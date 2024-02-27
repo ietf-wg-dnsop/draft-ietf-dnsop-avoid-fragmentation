@@ -252,14 +252,14 @@ R4. If the UDP responder detects an immediate error indicating
 Recommendations for UDP requestors {#RecommendationsRequestors}
 -----------------------------------
 
-R6. UDP requestors SHOULD limit the requestor's maximum UDP payload size.
+R5. UDP requestors SHOULD limit the requestor's maximum UDP payload size.
 It SHOULD use a limit of 1400 bytes, but a smaller limit MAY be used.
 (See {{details}} for more information.)
 
-R7. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
+R6. UDP requestors SHOULD drop fragmented DNS/UDP responses without IP reassembly
   to avoid cache poisoning attacks.
 
-R8. DNS responses may be dropped by IP fragmentation.
+R7. DNS responses may be dropped by IP fragmentation.
   Upon a timeout, 
   to avoid resolution failures,
   UDP requestors SHOULD retry using TCP
@@ -274,22 +274,22 @@ Large DNS responses are typically the result of zone configuration.
 People who publish information in the DNS SHOULD seek configurations, resulting in small responses.
 For example,
 
-R9. Use a smaller number of name servers.
+R8. Use a smaller number of name servers.
 
-R10. Use a smaller number of A/AAAA RRs for a domain name.
+R9. Use a smaller number of A/AAAA RRs for a domain name.
 
-R11. Use minimal-responses configuration:
+R10. Use minimal-responses configuration:
   Some implementations have a 'minimal responses' configuration option that causes
   DNS servers to make response packets smaller, containing only mandatory
   and required data ({{minimal-responses}}).
 
-R12. Use a smaller signature / public key size algorithm for DNSSEC.
+R11. Use a smaller signature / public key size algorithm for DNSSEC.
 Notably, the signature sizes of ECDSA and EdDSA
 are smaller than those of equivalent cryptographic strength using RSA.
 
-It is difficult to determine a specific upper limit for R9, R10, and
-R12, but it is sufficient if all responses from the DNS servers are
-below the size of R3 and R6.
+It is difficult to determine a specific upper limit for R8, R9, and
+R11, but it is sufficient if all responses from the DNS servers are
+below the size of R3 and R5.
 
 Protocol compliance considerations {#protocol}
 ===========
@@ -319,7 +319,7 @@ On-path fragmentation on IPv4
 If the Don't Fragment (DF) bit is not set,
 on-path fragmentation may happen on IPv4,
 and be vulnerable, as shown in {{ProblemOfFragmentation}}.
-To avoid this, recommendation R7 SHOULD be used
+To avoid this, recommendation R6 SHOULD be used
 to discard the fragmented responses and retry by TCP.
 
 Small MTU network
