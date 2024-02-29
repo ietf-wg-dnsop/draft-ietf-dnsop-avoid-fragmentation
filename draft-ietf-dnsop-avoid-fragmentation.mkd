@@ -149,9 +149,8 @@ The widely
 deployed EDNS0 feature in the DNS enables a DNS receiver to indicate
 its received UDP message size capacity which supports the sending of
 large UDP responses by a DNS server.
-DNS over UDP relies on IP fragmentation when a packet is larger
-than the path MTU, which is invited by an EDNS buffer size larger than the
-path MTU.
+DNS over UDP invites IP fragmentation when a packet is larger than the
+MTU of some network in the packet's path.
 
 Fragmented DNS UDP responses have systemic weaknesses, which expose
 the requestor to DNS cache poisoning from off-path attackers.
@@ -164,8 +163,8 @@ over UDP should take account of the observations stated in that document.
 
 TCP avoids fragmentation by segmenting data into packets that are smaller
 than or equal to the Maximum Segment Size (MSS).
-As for each transmitted segment, the size of the IP and TCP headers is known,
-and the IP packet size can be chosen to keep it below the other end's MSS and path MTU.
+For each transmitted segment, the size of the IP and TCP headers is known,
+and the IP packet size can be chosen to keep it within the estimated MTU and the other end's MSS.
 This takes advantage of the elasticity of TCP's
 packetizing process as to how much queued data will fit into the next
 segment. In contrast, DNS over UDP has little datagram size elasticity and
